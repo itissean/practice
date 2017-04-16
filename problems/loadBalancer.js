@@ -9,11 +9,11 @@ const LoadBalancer = {
     let busy;
     let free;
     for (busy = 0; busy < this.busyServers.length; busy++) {
-      statusMap.set(this.busyServers[busy], true);
+      statusMap.set(this.busyServers[busy], 'busy');
     }
     for (free = 0; free < this.servers; free++) {
       if (typeof statusMap.get(free) === 'undefined') {
-        statusMap.set(free, false);
+        statusMap.set(free, 'free');
       }
     }
     return statusMap;
@@ -21,7 +21,7 @@ const LoadBalancer = {
   getFreeServers() {
     const freeServers = [];
     this.getStatus().forEach((value, key, map) => {
-      if (map.get(key) === true) freeServers.push(key);
+      if (map.get(key) === 'free') freeServers.push(key);
     });
     return freeServers;
   },
